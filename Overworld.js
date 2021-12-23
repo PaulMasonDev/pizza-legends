@@ -16,39 +16,20 @@ class Overworld {
       this.ctx.drawImage(image, 0, 0);
     };
 
-    const x = 5;
-    const y = 6;
+    //Place some gameObjects
+    const hero = new GameObject({
+      x: 5,
+      y: 6,
+    });
+    const npc1 = new GameObject({
+      x: 7,
+      y: 9,
+      src: "images/characters/people/npc1.png",
+    });
 
-    const shadow = new Image();
-    shadow.src = "/images/characters/shadow.png";
-    shadow.onload = () => {
-      this.ctx.drawImage(
-        shadow,
-        0, // left cut
-        0, //top cut
-        32, //width of cut
-        32, //height of cut
-        x * 16 - 8, //x position
-        y * 16 - 18, //y position
-        32, //x scale
-        32 // y scale
-      );
-    };
-
-    const hero = new Image();
-    hero.src = "/images/characters/people/hero.png";
-    hero.onload = () => {
-      this.ctx.drawImage(
-        hero,
-        0, // left cut
-        0, //top cut
-        32, //width of cut
-        32, //height of cut
-        x * 16 - 8, //x position
-        y * 16 - 18, //y position
-        32, //x scale
-        32 // y scale
-      );
-    };
+    setTimeout(() => {
+      hero.sprite.draw(this.ctx);
+      npc1.sprite.draw(this.ctx);
+    }, 200);
   }
 }
