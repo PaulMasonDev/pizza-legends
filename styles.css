@@ -1,0 +1,31 @@
+* {
+  /* Part of the resetting for normalization of browsers */
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #333;
+  /* Normalizes the padding and margin for all browsers */
+  padding: 0;
+  margin: 0;
+  /* This disables scrolling on window when using arrow key input */
+  overflow: hidden;
+}
+
+.game-container {
+  /* To ensure that everything placed in the game container positions correctly */
+  position: relative;
+  /* Duplicated from the Canvas so that you can utilize camera-like functions */
+  width: 352px;
+  height: 198px;
+  /* This will center the container on screen.  0 margin on top, auto center margins on left and right */
+  margin: 0 auto;
+  outline: 1px solid white;
+  /* Scales up to twice the original size.  The translate Y is to offset the scaling */
+  transform: scale(2) translateY(50%);
+}
+
+.game-container canvas {
+  /* Eliminates the blurriness */
+  image-rendering: pixelated;
+}
