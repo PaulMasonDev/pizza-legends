@@ -14,9 +14,6 @@ class Sprite {
     };
     this.currentAnimation = config.currentAnimation || "idleDown";
     this.currentAnimationFrame = 0;
-    //This was added to address custom cut sizes like the baby
-    this.cutXSize = config.cutX || 32;
-    this.cutYSize = config.cutY || 32;
 
     //Reference the gameobject
     this.gameObject = config.gameObject;
@@ -46,8 +43,8 @@ class Sprite {
         this.image,
         0,
         0, // start of the cut
-        this.cutXSize,
-        this.cutYSize, //size of the cut, this changes depending on sprite layout
+        32,
+        32, //size of the cut, this changes depending on sprite layout
         x,
         y, // position of sprite
         32,
