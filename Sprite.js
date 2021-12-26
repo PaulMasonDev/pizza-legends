@@ -33,8 +33,8 @@ class Sprite {
     // These are passed ultimately from when a new GameObject() is used.
     // May need to create an offsetX and offsetY to address custom sprites
     // So const x = this.gameObject.x * 16 - offsetX;
-    const x = this.gameObject.x * 16 - 8;
-    const y = this.gameObject.y * 16 - 18;
+    const x = this.gameObject.x - 8;
+    const y = this.gameObject.y - 18;
 
     this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
 

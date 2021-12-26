@@ -17,7 +17,7 @@ class Overworld {
       this.map.drawLowerImage(this.ctx);
       // Draw all game objects as defined in the map
       Object.values(this.map.gameObjects).forEach((object) => {
-        object.x += 0.02;
+        object.update({ arrow: this.directionInput.direction });
         object.sprite.draw(this.ctx);
       });
       // Draw upper layer
@@ -32,7 +32,10 @@ class Overworld {
 
   // Common to have an init method in a class
   init() {
-    this.map = new OverworldMap(window.OverworldMaps.Kitchen);
+    this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
     this.startGameLoop();
   }
 }
