@@ -19,6 +19,8 @@ class Person extends GameObject {
   }
 
   update(state) {
+    this.updatePosition();
+    this.updateSprite(state);
     if (
       this.movingProgressRemaining === 0 &&
       state.arrow &&
@@ -27,7 +29,6 @@ class Person extends GameObject {
       this.direction = state.arrow;
       this.movingProgressRemaining = 16;
     }
-    this.updatePosition();
   }
 
   updatePosition() {
@@ -37,6 +38,22 @@ class Person extends GameObject {
       // Ex: if this.direction = up, this.y += -1; this.y is the property coming from the game object
       this[property] += change;
       this.movingProgressRemaining -= 1;
+    }
+  }
+
+  //This code sets the current animation by key, defined in the sprite file
+  updateSprite(state) {
+    //If there is no movement progress, and no arrow being held
+    if (
+      this.movingProgressRemaining === 0 &&
+      !state.arrow &&
+      this.isPlayerControlled
+    ) {
+      this.sprite.setAnimation(`idle-${this.direction}`);
+      return;
+    }
+    if (this.movingProgressRemaining > 0) {
+      this.sprite.setAnimation(`walk-${this.direction}`);
     }
   }
 }
