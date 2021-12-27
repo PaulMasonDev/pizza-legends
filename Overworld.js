@@ -18,7 +18,10 @@ class Overworld {
 
       Object.values(this.map.gameObjects).forEach((object) => {
         //Update all objects
-        object.update({ arrow: this.directionInput.direction });
+        object.update({
+          arrow: this.directionInput.direction,
+          map: this.map,
+        });
       });
 
       // Draw lower layer
@@ -42,7 +45,7 @@ class Overworld {
   // Common to have an init method in a class
   init() {
     this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
-
+    this.map.mountObjects();
     this.directionInput = new DirectionInput();
     this.directionInput.init();
     this.startGameLoop();

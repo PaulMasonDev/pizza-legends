@@ -19,41 +19,53 @@ class Person extends GameObject {
   }
 
   update(state) {
-    this.updatePosition();
-    this.updateSprite(state);
-    if (
-      this.movingProgressRemaining === 0 &&
-      state.arrow &&
-      this.isPlayerControlled
-    ) {
-      this.direction = state.arrow;
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    } else {
+      //More cases for starting to walk will come here
+      //
+      //
+
+      //Case: keyboard ready and have an arrow pressed
+      if (state.arrow && this.isPlayerControlled) {
+        this.startBehavior(state, {
+          type: "walk",
+          direction: state.arrow,
+        });
+      }
+      this.updateSprite(state);
+    }
+  }
+
+  startBehavior(state, behavior) {
+    //Setting the character direction to whatever behavior has
+    this.direction = behavior.direction;
+    if (behavior.type === "walk") {
+      //stop here if space is not free
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        return;
+      }
+      //ready to walk!
+      state.map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = 16;
     }
   }
 
   updatePosition() {
-    if (this.movingProgressRemaining > 0) {
-      //Example this.disrectionUpdate[up]
-      const [property, change] = this.directionUpdate[this.direction];
-      // Ex: if this.direction = up, this.y += -1; this.y is the property coming from the game object
-      this[property] += change;
-      this.movingProgressRemaining -= 1;
-    }
+    //Example this.disrectionUpdate[up]
+    const [property, change] = this.directionUpdate[this.direction];
+    // Ex: if this.direction = up, this.y += -1; this.y is the property coming from the game object
+    this[property] += change;
+    this.movingProgressRemaining -= 1;
   }
 
   //This code sets the current animation by key, defined in the sprite file
-  updateSprite(state) {
-    //If there is no movement progress, and no arrow being held
-    if (
-      this.movingProgressRemaining === 0 &&
-      !state.arrow &&
-      this.isPlayerControlled
-    ) {
-      this.sprite.setAnimation(`idle-${this.direction}`);
-      return;
-    }
+  updateSprite() {
     if (this.movingProgressRemaining > 0) {
       this.sprite.setAnimation(`walk-${this.direction}`);
+      return;
     }
+    this.sprite.setAnimation(`idle-${this.direction}`);
+    //If there is no movement progress, and no arrow being held
   }
 }
