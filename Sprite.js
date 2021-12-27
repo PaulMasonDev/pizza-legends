@@ -86,12 +86,12 @@ class Sprite {
     }
   }
 
-  draw(ctx) {
+  draw(ctx, cameraPerson) {
     // These are passed ultimately from when a new GameObject() is used.
     // May need to create an offsetX and offsetY to address custom sprites
     // So const x = this.gameObject.x * 16 - offsetX;
-    const x = this.gameObject.x - 8;
-    const y = this.gameObject.y - 18;
+    const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
+    const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 
     const [frameX, frameY] = this.frame;
 
