@@ -28,9 +28,15 @@ class Overworld {
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
       // Draw all game objects as defined in the map
-      Object.values(this.map.gameObjects).forEach((object) => {
-        object.sprite.draw(this.ctx, cameraPerson);
-      });
+      Object.values(this.map.gameObjects)
+        //This sort ensures that characters are painted from top down
+        //and no funky overlaps.
+        .sort((a, b) => {
+          return a.y - b.y;
+        })
+        .forEach((object) => {
+          object.sprite.draw(this.ctx, cameraPerson);
+        });
 
       // Draw upper layer
       this.map.drawUpperImage(this.ctx, cameraPerson);
@@ -49,5 +55,14 @@ class Overworld {
     this.directionInput = new DirectionInput();
     this.directionInput.init();
     this.startGameLoop();
+
+    //This is a sample cutscene and can be crafted however you want
+    this.map.startCutscene([
+      { who: "hero", type: "walk", direction: "down" },
+      { who: "hero", type: "walk", direction: "down" },
+      { who: "npcA", type: "walk", direction: "left" },
+      { who: "npcA", type: "walk", direction: "left" },
+      { who: "npcA", type: "stand", direction: "up", time: 800 },
+    ]);
   }
 }
