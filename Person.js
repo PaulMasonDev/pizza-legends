@@ -5,6 +5,7 @@ class Person extends GameObject {
 
     //This is telling the program how many iterations to go through before stopping a direction
     this.movingProgressRemaining = 0;
+    this.isStanding = false;
 
     //How to tell if this person is player controlled
     this.isPlayerControlled = config.isPlayerControlled || false;
@@ -61,9 +62,11 @@ class Person extends GameObject {
     }
 
     if (behavior.type === "stand") {
+      this.isStanding = true;
       setTimeout(() => {
         utils.emitEvent("PersonStandComplete", { whoId: this.id });
       }, behavior.time);
+      this.isStanding = false;
     }
   }
 

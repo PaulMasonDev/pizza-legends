@@ -48,21 +48,47 @@ class Overworld {
     step();
   }
 
+  bindActionInput() {
+    new KeyPressListener("Enter", () => {
+      //Is there a person here to talk to?
+      this.map.checkForActionCutscene();
+    });
+  }
+
+  bindHeroPositionCheck() {
+    document.addEventListener("PersonWalkingComplete", (e) => {
+      if (e.detail.whoId === "hero") {
+        //Hero's postition has changed
+        this.map.checkForFootstepCutscene();
+      }
+    });
+  }
+
+  startMap(mapConfig) {
+    this.map = new OverworldMap(mapConfig);
+    this.map.overworld = this;
+    this.map.mountObjects();
+  }
   // Common to have an init method in a class
   init() {
-    this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
-    this.map.mountObjects();
+    this.startMap(window.OverworldMaps.DemoRoom);
+
+    this.bindActionInput();
+    this.bindHeroPositionCheck();
+
     this.directionInput = new DirectionInput();
     this.directionInput.init();
     this.startGameLoop();
 
     //This is a sample cutscene and can be crafted however you want
-    this.map.startCutscene([
-      { who: "hero", type: "walk", direction: "down" },
-      { who: "hero", type: "walk", direction: "down" },
-      { who: "npcA", type: "walk", direction: "left" },
-      { who: "npcA", type: "walk", direction: "left" },
-      { who: "npcA", type: "stand", direction: "up", time: 800 },
-    ]);
+    // this.map.startCutscene([
+    //   { who: "hero", type: "walk", direction: "down" },
+    //   { who: "hero", type: "walk", direction: "down" },
+    //   { who: "npcA", type: "walk", direction: "up" },
+    //   { who: "npcA", type: "walk", direction: "left" },
+    //   { who: "hero", type: "stand", direction: "right", time: 200 },
+    //   { type: "textMessage", text: "Why hello there!" },
+    //   // { who: "npcA", type: "stand", direction: "up", time: 800 },
+    // ]);
   }
 }
