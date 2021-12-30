@@ -71,7 +71,7 @@ class Overworld {
   }
   // Common to have an init method in a class
   init() {
-    this.startMap(window.OverworldMaps.DemoRoom);
+    this.startMap(window.OverworldMaps.Kitchen);
 
     this.bindActionInput();
     this.bindHeroPositionCheck();
@@ -80,15 +80,10 @@ class Overworld {
     this.directionInput.init();
     this.startGameLoop();
 
-    //This is a sample cutscene and can be crafted however you want
+    // This is a sample cutscene and can be crafted however you want
     // this.map.startCutscene([
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "npcA", type: "walk", direction: "up" },
-    //   { who: "npcA", type: "walk", direction: "left" },
-    //   { who: "hero", type: "stand", direction: "right", time: 200 },
-    //   { type: "textMessage", text: "Why hello there!" },
-    //   // { who: "npcA", type: "stand", direction: "up", time: 800 },
+    //   // { type: "textMessage", text: "This is the very first message!" },
+    //   { type: "changeMap", map: "DemoRoom" },
     // ]);
   }
 }

@@ -58,9 +58,15 @@ class OverworldEvent {
   }
 
   changeMap(resolve) {
-    this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
-    resolve();
+    //This logic utilizes the fading css values
+    const sceneTransition = new SceneTransition();
+    sceneTransition.init(document.querySelector(".game-container"), () => {
+      this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+      resolve();
+      sceneTransition.fadeOut();
+    });
   }
+
   init() {
     return new Promise((resolve) => {
       this[this.event.type](resolve);
