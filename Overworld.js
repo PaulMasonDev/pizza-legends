@@ -81,9 +81,10 @@ class Overworld {
     this.startGameLoop();
 
     // This is a sample cutscene and can be crafted however you want
-    // this.map.startCutscene([
-    //   // { type: "textMessage", text: "This is the very first message!" },
-    //   { type: "changeMap", map: "DemoRoom" },
-    // ]);
+    this.map.startCutscene([
+      { type: "battle" },
+      // { type: "textMessage", text: "This is the very first message!" },
+      // { type: "changeMap", map: "DemoRoom" },
+    ]);
   }
 }
