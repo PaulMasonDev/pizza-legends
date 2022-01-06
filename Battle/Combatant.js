@@ -93,7 +93,6 @@ class Combatant {
       this.status?.type === "clumsy" &&
       utils.randomFromArray([true, false, false])
     ) {
-      console.log("Flops");
       return [{ type: "textMessage", text: `${this.name} flops over!` }];
     }
     return originalEvents;

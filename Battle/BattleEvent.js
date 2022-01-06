@@ -9,9 +9,7 @@ class BattleEvent {
       .replace("{CASTER}", this.event.caster?.name)
       .replace("{TARGET}", this.event.target?.name)
       .replace("{ACTION}", this.event.action?.name);
-    // .replace("{STATUS}", this.event.caster?.status?.type);
 
-    console.log(this.battle);
     const message = new TextMessage({
       text,
       onComplete: () => {
@@ -26,6 +24,7 @@ class BattleEvent {
     const menu = new SubmissionMenu({
       caster: this.event.caster,
       enemy: this.event.enemy,
+      items: this.battle.items,
       onComplete: (submission) => {
         //what move to use, and who to use it on
         resolve(submission);
