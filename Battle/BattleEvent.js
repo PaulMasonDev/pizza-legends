@@ -21,16 +21,63 @@ class BattleEvent {
   }
 
   submissionMenu(resolve) {
+    const { caster } = this.event;
     const menu = new SubmissionMenu({
-      caster: this.event.caster,
+      caster: caster,
       enemy: this.event.enemy,
       items: this.battle.items,
+      replacements: Object.values(this.battle.combatants).filter(
+        (combatant) => {
+          return (
+            combatant.id !== caster.id &&
+            combatant.team === caster.team &&
+            combatant.hp > 0
+          );
+        }
+      ),
       onComplete: (submission) => {
         //what move to use, and who to use it on
         resolve(submission);
       },
     });
     menu.init(this.battle.element);
+  }
+
+  replacementMenu(resolve) {
+    const menu = new ReplacementMenu({
+      replacements: Object.values(this.battle.combatants).filter(
+        (combatant) => {
+          return combatant.team === this.event.team && combatant.hp > 0;
+        }
+      ),
+      onComplete: (replacement) => {
+        resolve(replacement);
+      },
+    });
+    menu.init(this.battle.element);
+  }
+
+  async replace(resolve) {
+    const { replacement } = this.event;
+
+    //Clear out the old combatant
+    const prevCombatant =
+      this.battle.combatants[this.battle.activeCombatants[replacement.team]];
+    this.battle.activeCombatants[replacement.team] = null;
+    prevCombatant.update();
+    await utils.wait(400);
+
+    //In with the new
+    this.battle.activeCombatants[replacement.team] = replacement.id;
+    replacement.update();
+    await utils.wait(400);
+
+    resolve();
+  }
+
+  animation(resolve) {
+    const fn = BattleAnimations[this.event.animation];
+    fn(this.event, resolve);
   }
 
   async stateChange(resolve) {
@@ -79,11 +126,6 @@ class BattleEvent {
     // caster.pizzaElement.classList.remove("battle-spin-right");
 
     resolve();
-  }
-
-  animation(resolve) {
-    const fn = BattleAnimations[this.event.animation];
-    fn(this.event, resolve);
   }
 
   init(resolve) {

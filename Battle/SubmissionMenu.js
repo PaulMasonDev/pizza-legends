@@ -1,5 +1,5 @@
 class SubmissionMenu {
-  constructor({ caster, enemy, onComplete, items }) {
+  constructor({ caster, enemy, onComplete, items, replacements }) {
     this.caster = caster;
     this.enemy = enemy;
     this.onComplete = onComplete;
@@ -20,6 +20,9 @@ class SubmissionMenu {
       }
     });
     this.items = Object.values(quantityMap);
+    console.log({ replacements });
+    this.replacements = replacements;
+    console.log({ replacements });
   }
 
   getPages() {
@@ -54,7 +57,7 @@ class SubmissionMenu {
           description: "Change to another pizza",
           handler: () => {
             //See pizza options
-            console.log("GO TO PIZZAS PAGE");
+            this.keyboardMenu.setOptions(this.getPages().replacements);
           },
         },
       ],
@@ -87,7 +90,26 @@ class SubmissionMenu {
         }),
         backOption,
       ],
+      replacements: [
+        ...this.replacements.map((replacement) => {
+          return {
+            label: replacement.name,
+            description: replacement.description,
+            handler: () => {
+              this.menuSubmitReplacement(replacement);
+            },
+          };
+        }),
+        backOption,
+      ],
     };
+  }
+
+  menuSubmitReplacement(replacement) {
+    this.keyboardMenu?.end();
+    this.onComplete({
+      replacement,
+    });
   }
 
   menuSubmit(action, instanceId = null) {
