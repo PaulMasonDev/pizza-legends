@@ -72,6 +72,9 @@ class BattleEvent {
     replacement.update();
     await utils.wait(400);
 
+    this.battle.playerTeam.update();
+    this.battle.enemyTeam.update();
+
     resolve();
   }
 
@@ -95,7 +98,6 @@ class BattleEvent {
       });
       //start blinking
       target.pizzaElement.classList.add("battle-damage-blink");
-      //   caster.pizzaElement.classList.add("battle-spin-right");
     }
 
     if (recover) {
@@ -122,8 +124,12 @@ class BattleEvent {
     //wait a little bit
     //stop blinking
     await utils.wait(600);
+
+    console.log(this.battle);
+    this.battle.playerTeam.update();
+    this.battle.enemyTeam.update();
+
     target.pizzaElement.classList.remove("battle-damage-blink");
-    // caster.pizzaElement.classList.remove("battle-spin-right");
 
     resolve();
   }

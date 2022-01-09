@@ -20,9 +20,7 @@ class SubmissionMenu {
       }
     });
     this.items = Object.values(quantityMap);
-    console.log({ replacements });
     this.replacements = replacements;
-    console.log({ replacements });
   }
 
   getPages() {

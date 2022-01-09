@@ -55,7 +55,6 @@ class TurnCycle {
 
     //Check did the target die
     const targetDead = submission.target.hp <= 0;
-    console.log({ targetDead });
     if (targetDead) {
       await this.onNewEvent({
         type: "textMessage",
