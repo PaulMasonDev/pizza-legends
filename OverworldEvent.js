@@ -79,15 +79,21 @@ class OverworldEvent {
     menu.init(document.querySelector(".game-container"));
   }
 
+  addStoryFlag(resolve) {
+    window.playerState.storyFlags[this.event.storyFlag] = true;
+    resolve();
+  }
+
   battle(resolve) {
     const battle = new Battle({
       enemy: Enemies[this.event.enemyId],
-      onComplete: () => {
-        resolve();
+      onComplete: (didWin) => {
+        resolve(didWin ? "WON BATTLE" : "LOST BATTLE");
       },
     });
     battle.init(document.querySelector(".game-container"));
   }
+
   init() {
     return new Promise((resolve) => {
       this[this.event.type](resolve);

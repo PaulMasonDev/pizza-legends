@@ -3,7 +3,7 @@ class PlayerState {
     this.pizzas = {
       p1: {
         pizzaId: "s001",
-        hp: 30,
+        hp: 1,
         maxHp: 50,
         xp: 75,
         maxXp: 100,
@@ -29,12 +29,13 @@ class PlayerState {
         status: null,
       },
     };
-    this.lineUp = ["p1", "p2"];
+    this.lineUp = ["p1"];
     this.items = [
       { actionId: "item_recoverHP", instanceId: "item1" },
       { actionId: "item_recoverHP", instanceId: "item2" },
       { actionId: "item_recoverHP", instanceId: "item3" },
     ];
+    this.storyFlags = {};
   }
 
   swapLineup(oldId, incomingId) {
