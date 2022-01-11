@@ -71,6 +71,9 @@ class Overworld {
   }
   // Common to have an init method in a class
   init() {
+    this.hud = new Hud();
+    this.hud.init(document.querySelector(".game-container"));
+
     this.startMap(window.OverworldMaps.DemoRoom);
 
     this.bindActionInput();
