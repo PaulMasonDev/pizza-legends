@@ -74,7 +74,9 @@ class SubmissionMenu {
       ],
       items: [
         ...this.items.map((item) => {
+          console.log(item);
           const action = Actions[item.actionId];
+          console.log({ action });
           return {
             label: action.name,
             description: action.description,
@@ -126,11 +128,14 @@ class SubmissionMenu {
 
   showMenu(container) {
     this.keyboardMenu = new KeyboardMenu();
+
     this.keyboardMenu.init(container);
     this.keyboardMenu.setOptions(this.getPages().root);
+    console.log(this.keyboardMenu);
   }
 
   init(container) {
+    console.log(this.caster);
     if (this.caster.isPlayerControlled) {
       //Show some ui
       this.showMenu(container);
