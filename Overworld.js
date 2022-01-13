@@ -95,14 +95,22 @@ class Overworld {
     this.progress.startingHeroDirection = this.map.gameObjects.hero.direction;
   }
   // Common to have an init method in a class
-  init() {
+  async init() {
     //Create a new data tracker
     this.progress = new Progress();
 
+    //Show the title screen
+    this.titleScreen = new TitleScreen({
+      progress: this.progress,
+    });
+    const useSaveFile = await this.titleScreen.init(
+      document.querySelector(".game-container")
+    );
+
     //Potentially check for save data
     let initialHeroState = null;
-    const saveFile = this.progress.getSaveFile();
-    if (saveFile) {
+
+    if (useSaveFile) {
       this.progress.load();
       initialHeroState = {
         x: this.progress.startingHeroX,
@@ -115,7 +123,6 @@ class Overworld {
     this.hud.init(document.querySelector(".game-container"));
 
     //Start the first map
-    console.log(this.progress);
     this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState);
 
     //Create Controls

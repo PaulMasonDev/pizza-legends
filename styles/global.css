@@ -20,6 +20,7 @@ body {
   margin: 0;
   /* This disables scrolling on window when using arrow key input */
   overflow: hidden;
+  font-family: "Ribeye", cursive;
 }
 
 .game-container {
